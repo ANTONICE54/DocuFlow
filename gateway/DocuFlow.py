@@ -1,6 +1,6 @@
 from openai import OpenAI
 
 client = OpenAI(
-  organization='api-token2',
+  organization='api-token3',
   project='$PROJECT_ID2',
 )
