@@ -1,5 +1,5 @@
 import openai
-from gateway.config import *
+from config import *
 import docx
 from fastapi import FastAPI, UploadFile, File, Depends, FastAPI, HTTPException, APIRouter
 from typing import Optional
@@ -53,7 +53,49 @@ async def get_explanation(document_text: str) -> get_explanation_result:
         explanation_result = chat_gpt_request.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "assistant", "content": 'document:{document_text}.(Country Ukraine).\nMake big explanation of this document in simple words for an ordinary person, but do not forget about the details (names, numbers, etc.). As a result, you will receive a text about this document in the language of the country.'}
+                {"role": "system", "content": f'document:{document_text}'},
+                {"role": "assistant", "content": f'(Country Ukraine).\nMake explanation of this document in simple words for an ordinary person by points, but do not forget about the details (names, numbers, etc.). As a result, you will receive a text about this document in the language of the country. Finally, make it look good. Make more than 2000 characters'}
+            ]
+        ).choices[0].message.content
+    except Exception as explanation_error:
+        raise HTTPException(400, detail=f"Explanation was failed\n\n{explanation_error}")
+
+    return {"explanation_result": explanation_result}
+
+
+
+@docu_flow_router.get("/get_part_explanation")
+async def get_part_explanation(document_text: str, explain_request: str) -> get_explanation_result:
+    try:
+        chat_gpt_request = openai.OpenAI(api_key=CHAT_GPT_TOKEN)
+
+        explanation_result = chat_gpt_request.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": f'document:{document_text}'},
+                {"role": "system", "content": f'request to explain:{explain_request}'},
+                {"role": "assistant", "content": f'(Country Ukraine).\nMake very easy explanation of this document by user explanaition request in super simple words for an ordinary person, but do not forget about the details (names, numbers, etc.). As a result, you will receive a text about this document in the language of the country. Finally, make it look good. Make more than 400 characters'}
+            ]
+        ).choices[0].message.content
+    except Exception as explanation_error:
+        raise HTTPException(400, detail=f"Explanation was failed\n\n{explanation_error}")
+
+    return {"explanation_result": explanation_result}
+
+
+
+@docu_flow_router.get("/replace_document_part")
+async def replace_document_part(document_text: str, replace_document_part: str, replace_request: str = "") -> get_explanation_result:
+    try:
+        chat_gpt_request = openai.OpenAI(api_key=CHAT_GPT_TOKEN)
+
+        explanation_result = chat_gpt_request.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": f'document:{document_text}'},
+                {"role": "system", "content": f'replace request:{replace_request}'},
+                {"role": "system", "content": f'Part for replace:{replace_document_part}'},
+                {"role": "assistant", "content": f'(Country Ukraine).\nIf replacement request is exist, use it. Replace part to make it better for all sides good in the document context. Keep context but replace all this part. As a result, you will receive a replaced text in the language of the country. All data that you do not have, make it in the <[data]> format, make the name of this data clear. Finally, make it look good. Create roughly the same number of characters'}
             ]
         ).choices[0].message.content
     except Exception as explanation_error:
@@ -65,18 +107,3 @@ async def get_explanation(document_text: str) -> get_explanation_result:
 
 
 api_app.include_router(docu_flow_router)
-
-# document_text =  '\n'.join(paragraph.text for paragraph in docx.Document('/Users/dmitro/Downloads/Договір з Ліцензіатом.docx').paragraphs)
-
-# chat_gpt_request = openai.OpenAI(api_key=CHAT_GPT_TOKEN)
-
-
-# completion = chat_gpt_request.chat.completions.create(
-#     model="gpt-4o",
-#     messages=[
-#         {"role": "system", "content":document_text},
-#         {"role": "assistant", "content": '(Country Ukraine) Explain this document in simple words for an ordinary person, but do not forget about the details (names, numbers, etc.). As a result, you will receive a text about this document in the language of the country.'}
-#     ]
-# ).choices[0].message.content
-
-# print(completion)
