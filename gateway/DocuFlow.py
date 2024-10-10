@@ -17,8 +17,8 @@ async def get_token(auth: Optional[HTTPAuthorizationCredentials] = Depends(auth_
     return auth.credentials
 
 
-doocu_flow_router = APIRouter(
-    tags=["forAdmins"],
+docu_flow_router = APIRouter(
+    tags=["DocuFlow"],
     dependencies=[Depends(get_token)]
 )
 
@@ -28,10 +28,10 @@ class extract_data_from_file_result(BaseModel):
     document_text: str
 
 class get_explanation_result(BaseModel):
-    explenation_result: str
+    explanation_result: str
 
 
-@doocu_flow_router.post("/extract_data_from_file/")
+@docu_flow_router.post("/extract_data_from_file/")
 async def extract_data_from_file(input_file: UploadFile = File(...)) -> extract_data_from_file_result:
     if input_file.content_type == "application/pdf":
         document_text =  '\n'.join(pdf_page.extract_text() for pdf_page in PdfReader(input_file.file).pages)
@@ -45,26 +45,26 @@ async def extract_data_from_file(input_file: UploadFile = File(...)) -> extract_
 
 
 
-@doocu_flow_router.get("/get_explenation")
-async def get_explenation(document_text: str) -> get_explanation_result:
+@docu_flow_router.get("/get_explanation")
+async def get_explanation(document_text: str) -> get_explanation_result:
     try:
         chat_gpt_request = openai.OpenAI(api_key=CHAT_GPT_TOKEN)
 
-        explenation_result = chat_gpt_request.chat.completions.create(
+        explanation_result = chat_gpt_request.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "assistant", "content": 'document:{document_text}.(Country Ukraine).\nMake big explenation of this document in simple words for an ordinary person, but do not forget about the details (names, numbers, etc.). As a result, you will receive a text about this document in the language of the country.'}
+                {"role": "assistant", "content": 'document:{document_text}.(Country Ukraine).\nMake big explanation of this document in simple words for an ordinary person, but do not forget about the details (names, numbers, etc.). As a result, you will receive a text about this document in the language of the country.'}
             ]
         ).choices[0].message.content
-    except:
-        raise HTTPException(400, detail="Explanation was failed")
+    except Exception as explanation_error:
+        raise HTTPException(400, detail=f"Explanation was failed\n\n{explanation_error}")
 
-    return {"explenation_result": explenation_result}
-
-
+    return {"explanation_result": explanation_result}
 
 
-api_app.include_router(doocu_flow_router)
+
+
+api_app.include_router(docu_flow_router)
 
 # document_text =  '\n'.join(paragraph.text for paragraph in docx.Document('/Users/dmitro/Downloads/Договір з Ліцензіатом.docx').paragraphs)
 
