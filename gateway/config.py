@@ -1,1 +1,2 @@
 CHAT_GPT_TOKEN = "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"
+AUTH_SWAGGER_TOKEN = "docu_flow_admin_token"
