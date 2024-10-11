@@ -11,3 +11,24 @@ type User struct {
 	HashedPassword string
 	CreatedAt      time.Time
 }
+
+type RegisterUserRequest struct {
+	Name     string `json:"name"`
+	Surname  string `json:"surname"`
+	Email    string `json:"email"`
+	Country  string `json:"country"`
+	Password string `json:"password"`
+}
+
+type RegisterUserResponse struct {
+	Token string `json:"token"`
+}
+
+type LoginUserRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type LoginUserResponse struct {
+	Token string `json:"token"`
+}
