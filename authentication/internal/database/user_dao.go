@@ -1,6 +1,7 @@
 package database
 
 import (
+	"auth_service/internal/apperrors"
 	"auth_service/internal/models"
 	"context"
 	"database/sql"
@@ -16,20 +17,32 @@ func NewUserRepo(db *sql.DB) *UserRepo {
 	}
 }
 
-func (repo *UserRepo) Create(user models.User) error {
-	query := "INSERT INTO users(name, surname, email, country, hashed_password) values ($1, $2, $3, $4, $5);"
+func (repo *UserRepo) Create(user models.User) (*models.User, error) {
+	query := "INSERT INTO users(name, surname, email, country, hashed_password) values ($1, $2, $3, $4, $5) RETURNING id, name, surname, email, country, hashed_password, created_at;"
 
 	ctx, cancel := context.WithTimeout(context.Background(), DBTimeout)
 
 	defer cancel()
 
-	_, err := repo.ExecContext(ctx, query, user.Name, user.Surname, user.Email, user.Country, user.HashedPassword)
+	row := repo.QueryRowContext(ctx, query, user.Name, user.Surname, user.Email, user.Country, user.HashedPassword)
+
+	var res models.User
+
+	err := row.Scan(
+		&res.ID,
+		&res.Name,
+		&res.Surname,
+		&res.Email,
+		&res.Country,
+		&res.HashedPassword,
+		&res.CreatedAt,
+	)
 
 	if err != nil {
-		return err
+		return nil, apperrors.ErrDatabase(err.Error())
 	}
 
-	return nil
+	return &res, nil
 }
 
 func (repo *UserRepo) GetByEmail(email string) (*models.User, error) {
@@ -54,7 +67,7 @@ func (repo *UserRepo) GetByEmail(email string) (*models.User, error) {
 	)
 
 	if err != nil {
-		return nil, err
+		return nil, apperrors.ErrDatabase(err.Error())
 	}
 
 	return &res, nil
