@@ -13,6 +13,7 @@ import (
 type IUserUseCase interface {
 	Register(user models.RegisterUserRequest) (*string, error)
 	Login(loginInfo models.LoginUserRequest) (*string, error)
+	Verify(verifyInfo models.VerifyRequest) (*uint, error)
 }
 
 type UserHandler struct {
@@ -88,4 +89,36 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, rsp)
 
+}
+
+func (h *UserHandler) Verify(ctx *gin.Context) {
+	var req models.VerifyRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Couldn't bind request",
+		})
+		return
+	}
+
+	userID, err := h.userUC.Verify(req)
+
+	if err != nil {
+		var appErr *apperrors.AppError
+		if errors.As(err, &appErr) {
+			log.Print(appErr.Message)
+			ctx.JSON(appErr.Status(), appErr.JSONResponse)
+		} else {
+			log.Print(err.Error())
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "internal server error"})
+		}
+
+		return
+
+	}
+
+	resp := models.VerifyResponse{
+		UserID: *userID,
+	}
+
+	ctx.JSON(http.StatusOK, resp)
 }

@@ -18,6 +18,8 @@ type IPasswordHasher interface {
 
 type ITokenMaker interface {
 	GenerateToken(userID int) (string, error)
+	VerifyToken(tokenString string) error
+	ExtractClaims(tokenString string) (*uint, error)
 }
 
 type UserUC struct {
@@ -94,4 +96,19 @@ func (uc *UserUC) Login(loginInfo models.LoginUserRequest) (*string, error) {
 	}
 
 	return &token, nil
+}
+
+func (uc *UserUC) Verify(verifyInfo models.VerifyRequest) (*uint, error) {
+	err := uc.tokenMaker.VerifyToken(verifyInfo.Token)
+
+	if err != nil {
+		return nil, err
+	}
+
+	userID, err := uc.tokenMaker.ExtractClaims(verifyInfo.Token)
+
+	if err != nil {
+		return nil, err
+	}
+	return userID, nil
 }

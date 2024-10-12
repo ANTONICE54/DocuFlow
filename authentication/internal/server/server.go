@@ -9,6 +9,7 @@ import (
 type IUserHandler interface {
 	Register(ctx *gin.Context)
 	Login(ctx *gin.Context)
+	Verify(ctx *gin.Context)
 }
 
 type Server struct {
@@ -30,6 +31,7 @@ func (s *Server) setUpRoutes() {
 
 	s.router.POST("/register", s.userHandler.Register)
 	s.router.POST("/login", s.userHandler.Login)
+	s.router.POST("/verify", s.userHandler.Verify)
 }
 
 func (s *Server) Run(serverPort string) {

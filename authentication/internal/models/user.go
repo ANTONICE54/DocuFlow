@@ -32,3 +32,15 @@ type LoginUserRequest struct {
 type LoginUserResponse struct {
 	Token string `json:"token"`
 }
+
+type VerifyTokenRequest struct {
+	Token string `json:"token"`
+}
+
+type VerifyRequest struct {
+	Token string `json:"token"`
+}
+
+type VerifyResponse struct {
+	UserID uint `json:"user_id"`
+}
