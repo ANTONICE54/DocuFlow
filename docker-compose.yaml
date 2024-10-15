@@ -3,22 +3,25 @@ services:
 
   
 
-  postgres:
+  userPostgres:
     image: postgres:12-alpine
     ports: 
       - 5432:5432
     env_file:
       - .env
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${USER_DB_USER}
+      POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
+      POSTGRES_DB: ${USER_DB_NAME}
     healthcheck:
-      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${DB_USER} -d ${DB_NAME}'"]
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${USER_DB_USER} -d ${USER_DB_NAME}'"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 80s  
+
+
+
 
 
   user_service:
@@ -28,7 +31,39 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      postgres:
+      userPostgres:
+        condition: service_healthy 
+      
+    restart: always
+    command: ["/app/main"]
+
+    
+  categoryPostgres:
+    image: postgres:12-alpine
+    ports: 
+      - 5433:5432
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${CATEGORY_DB_USER}
+      POSTGRES_PASSWORD: ${CATEGORY_DB_PASSWORD}
+      POSTGRES_DB: ${CATEGORY_DB_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${CATEGORY_DB_USER} -d ${CATEGORY_DB_NAME}'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 80s  
+
+
+  category_service:
+    build:
+      context: .
+      dockerfile: ./category_service/Dockerfile
+    ports:
+      - 8081:8080
+    depends_on:
+      userPostgres:
         condition: service_healthy 
       
     restart: always

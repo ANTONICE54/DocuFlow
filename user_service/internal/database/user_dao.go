@@ -93,12 +93,16 @@ func (repo *UserRepo) GetByID(userID uint) (*models.User, error) {
 		&res.HashedPassword,
 		&res.CreatedAt,
 	)
-
-	if err == sql.ErrNoRows {
-		return nil, apperrors.ErrNotFound("user with such id not found")
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, apperrors.ErrNotFound("user with such id not found")
+		} else {
+			return nil, apperrors.ErrDatabase(err.Error())
+		}
 	}
 
 	return &res, nil
+
 }
 
 func (repo *UserRepo) Update(userObj models.User) (*models.User, error) {

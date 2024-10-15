@@ -1,2 +1,3 @@
 .env
-./authentication/.env
+./user_service/.env
+./category_service/.env
