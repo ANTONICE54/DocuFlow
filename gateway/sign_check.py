@@ -12,7 +12,7 @@ def check_sign_up(sign_data):
             return f"{data_name} є порожній"
         
     if sign_data["password"] != sign_data["password_confirmation"]:
-        return f"{data_name} пітвердження паролю не співпадає"
+        return f"Пітвердження паролю не співпадає"
         
     return "succes"
     

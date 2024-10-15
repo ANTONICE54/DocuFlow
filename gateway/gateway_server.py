@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, render_template, request, redirect, session, send_file
 from sign_check import *
+from auth_functions import *
 
 docu_flow_app = Flask(__name__)
 docu_flow_blueprint = Blueprint('docu_flow', __name__)
@@ -21,11 +22,10 @@ def sign_in():
         sign_in_result = check_sign_in({'email': email, 'password': password})
 
         if sign_in_result != "succes":
-            return render_template('sign_in.html', warning_title=sign_in_result)
+            return render_template('sign_in.html', filled_data=[email, password], warning_title=sign_in_result)
 
-        print(email, password)
         return redirect('/')
-    return render_template('sign_in.html')
+    return render_template('sign_in.html', filled_data=[])
 
 
 @docu_flow_blueprint.route('/sign_up', methods=['GET', 'POST'])
@@ -41,10 +41,12 @@ def sign_up():
         sign_up_result = check_sign_up({'name': name,'surname': surname, 'email': email, 'country': country, 'password': password, 'password_confirmation': password_confirmation})
 
         if sign_up_result != "succes":
-            return render_template('sign_up.html', warning_title=sign_up_result)
+            register_profile(name, surname, email, country, password, password_confirmation)
+
+            return render_template('sign_up.html', filled_data=[name, surname, email, country, password, password_confirmation], warning_title=sign_up_result)
         
         return redirect('/')
-    return render_template('sign_up.html')
+    return render_template('sign_up.html',  filled_data=[])
 
 
 docu_flow_app.register_blueprint(docu_flow_blueprint)

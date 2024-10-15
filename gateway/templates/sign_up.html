@@ -30,14 +30,14 @@
                     <img src="/static/images_sign/name_icon.png">
                     Ваше ім’я
                 </p>
-                <input type="text" placeholder="Ім’я" name="name" max="255"/>
+                <input type="text" placeholder="Ім’я" name="name" value="{{filled_data[0]}}" max="255"/>
             </div>
             <div class="sign_input">
                 <p class="sign_input_title">
                     <img src="/static/images_sign/name_icon.png">
                     Ваше прізвище
                 </p>
-                <input type="text" placeholder="Прізвище" name="surname" max="255"/>
+                <input type="text" placeholder="Прізвище" name="surname" value="{{filled_data[1]}}" max="255"/>
             </div>
         </div>
         <div class="sign_inputs">
@@ -46,7 +46,7 @@
                     <img src="/static/images_sign/email_icon.png">
                     Пошта
                 </p>
-                <input type="email" placeholder="Пошта" name="email" max="255"/>
+                <input type="email" placeholder="Пошта" name="email" value="{{filled_data[2]}}" max="255"/>
             </div>
             <div class="sign_input">
                 <p class="sign_input_title">
@@ -69,19 +69,19 @@
                     <img src="/static/images_sign/password_icon.png">
                     Пароль
                 </p>
-                <input type="password" placeholder="Пароль" name="password" max="255"/>
+                <input type="password" placeholder="Пароль" name="password" value="{{filled_data[4]}}" max="255"/>
             </div>
             <div class="sign_input">
                 <p class="sign_input_title">
                     <img src="/static/images_sign/password_icon.png">
                     Підтвердження паролю
                 </p>
-                <input type="password" placeholder="Пароль" name="password_confirmation" max="255"/>
+                <input type="password" placeholder="Пароль" name="password_confirmation" value="{{filled_data[5]}}" max="255"/>
             </div>
         </div>
 
         <div class="sign_in_buttons">
-            <button class="sign_in_button_2">Увійти</button>
+            <button class="sign_in_button_2">Зареєструватися</button>
             <a class="sign_in_with_google">
                 <img src="/static/images_sign/google_icon.png">
                 Google
