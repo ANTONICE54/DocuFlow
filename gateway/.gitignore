@@ -1,1 +1,5 @@
-python-code/config.py
+config.py
+__pycache__
+*.pyc
+__pycache__/config.cpython-311.pyc
+__pycache__/*.pyc
