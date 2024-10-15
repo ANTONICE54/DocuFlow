@@ -63,25 +63,19 @@ services:
     ports:
       - 8081:8080
     depends_on:
-      userPostgres:
+      categoryPostgres:
         condition: service_healthy 
       
     restart: always
     command: ["/app/main"]
 
 
-
-  docu_service:
+  document_service:
     build:
       context: .
-      dockerfile: ./gateway/Dockerfile
+      dockerfile: ./python_api/Dockerfile
     ports:
-      - 5000:5000
-    depends_on:
-      user_service:
-        condition: service_healthy
-      category_service:
-        condition: service_healthy
+      - 5001:5001
     restart: always
 
   gateway_service:
@@ -90,9 +84,4 @@ services:
       dockerfile: ./gateway/Dockerfile
     ports:
       - 5000:5000
-    depends_on:
-      user_service:
-        condition: service_healthy
-      category_service:
-        condition: service_healthy
     restart: always

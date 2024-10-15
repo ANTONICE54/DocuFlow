@@ -2,9 +2,14 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+COPY ./python_api .
 
-COPY . .
+RUN pip3 install --upgrade pip && pip install --no-cache-dir -r /app/requirments.txt
 
-CMD ["python", "DocuFlow.py"]
+
+EXPOSE 5001
+
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:5001", "--log-level", "debug", "DocuFlow:api_app"]
+
+
+
