@@ -68,3 +68,31 @@ services:
       
     restart: always
     command: ["/app/main"]
+
+
+
+  docu_service:
+    build:
+      context: .
+      dockerfile: ./gateway/Dockerfile
+    ports:
+      - 5000:5000
+    depends_on:
+      user_service:
+        condition: service_healthy
+      category_service:
+        condition: service_healthy
+    restart: always
+
+  gateway_service:
+    build:
+      context: .
+      dockerfile: ./gateway/Dockerfile
+    ports:
+      - 5000:5000
+    depends_on:
+      user_service:
+        condition: service_healthy
+      category_service:
+        condition: service_healthy
+    restart: always
