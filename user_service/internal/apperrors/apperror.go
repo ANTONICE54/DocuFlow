@@ -62,3 +62,7 @@ func ErrBadRequest(msg string) *AppError {
 func ErrUnauthorized(msg string) *AppError {
 	return NewError(msg, Unauthorized, "Unauthorized")
 }
+
+func ErrNotFound(msg string) *AppError {
+	return NewError(msg, NotFound, "User not found")
+}

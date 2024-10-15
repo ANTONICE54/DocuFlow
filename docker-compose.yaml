@@ -24,7 +24,7 @@ services:
   user_service:
     build:
       context: .
-      dockerfile: ./authentication/Dockerfile
+      dockerfile: ./user_service/Dockerfile
     ports:
       - 8080:8080
     depends_on:

@@ -9,6 +9,9 @@ import (
 type IUserRepo interface {
 	Create(user models.User) (*models.User, error)
 	GetByEmail(email string) (*models.User, error)
+	GetByID(userID uint) (*models.User, error)
+	Update(userObj models.User) (*models.User, error)
+	Delete(userID uint) error
 }
 
 type IPasswordHasher interface {
@@ -111,4 +114,60 @@ func (uc *UserUC) Verify(verifyInfo models.VerifyRequest) (*uint, error) {
 		return nil, err
 	}
 	return userID, nil
+}
+
+func (uc *UserUC) Get(userID uint) (*models.User, error) {
+
+	return uc.userRepo.GetByID(userID)
+}
+
+func (uc *UserUC) Delete(userID uint) error {
+	_, err := uc.userRepo.GetByID(userID)
+
+	if err != nil {
+		return err
+	}
+
+	return uc.userRepo.Delete(userID)
+}
+
+func (uc *UserUC) Update(updInfo models.UpdateUserRequest) (*models.User, error) {
+	userBeforeUpd, err := uc.userRepo.GetByID(updInfo.ID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	userUpdObj := models.User{
+		ID:      userBeforeUpd.ID,
+		Name:    userBeforeUpd.Name,
+		Surname: userBeforeUpd.Surname,
+		Email:   userBeforeUpd.Email,
+		Country: userBeforeUpd.Country,
+	}
+	userUpdObj.ID = updInfo.ID
+
+	if updInfo.Name != "" {
+		userUpdObj.Name = updInfo.Name
+	}
+
+	if updInfo.Surname != "" {
+		userUpdObj.Surname = updInfo.Surname
+	}
+
+	if updInfo.Email != "" {
+		userUpdObj.Email = updInfo.Email
+	}
+
+	if updInfo.Country != "" {
+		userUpdObj.Country = updInfo.Country
+	}
+
+	userAfterUpd, err := uc.userRepo.Update(userUpdObj)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return userAfterUpd, nil
 }

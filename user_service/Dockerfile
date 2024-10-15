@@ -1,8 +1,8 @@
 #Build stage
 FROM golang:1.22.5-alpine3.19 AS builder
 WORKDIR /app
-COPY authentication .
-RUN go build -o main ./cmd/auth/main.go
+COPY user_service .
+RUN go build -o main ./cmd/main/main.go
 
 #Run stage
 FROM alpine:3.19

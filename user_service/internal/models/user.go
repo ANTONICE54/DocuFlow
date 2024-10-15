@@ -44,3 +44,27 @@ type VerifyRequest struct {
 type VerifyResponse struct {
 	UserID uint `json:"user_id"`
 }
+
+type UpdateUserRequest struct {
+	ID      uint
+	Name    string `json:"name"`
+	Surname string `json:"surname"`
+	Email   string `json:"email"`
+	Country string `json:"country"`
+}
+
+type UpdateUserResponse struct {
+	ID      uint   `json:"id"`
+	Name    string `json:"name"`
+	Surname string `json:"surname"`
+	Email   string `json:"email"`
+	Country string `json:"country"`
+}
+
+type GetUserResponse struct {
+	ID      uint   `json:"id"`
+	Name    string `json:"name"`
+	Surname string `json:"surname"`
+	Email   string `json:"email"`
+	Country string `json:"country"`
+}
