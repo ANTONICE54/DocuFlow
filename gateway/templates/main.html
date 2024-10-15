@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docu Flow</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='/css/main.css') }}">
+
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='favicon.ico') }}">
+</head>
+
+<body>
+    <nav>
+        <img src="/static/images_main/logo.png" class="logo"/>
+
+        <div class="nav_links">
+            <a class="nav_link" href="/docs">Docs</a>
+            <a class="nav_link" href="/price">Price</a>
+            <a class="nav_link" href="/api">API</a>
+        </div>
+
+        <div class="account_content">
+            <a class="sign_in_button" href="/sign_in">Увійти</a>
+            <a class="account_button" href="/account">
+                <img src="/static/images_main/account_icon.png"/>
+            </a>
+        </div>
+    </nav>
+
+    <section class="first_section">
+        <img src="/static/images_main/first_section_background.png" class="background">
+        <p class="section_text">
+            Розумна система на основі нейромереж та ШІ для швидкої та зручної обробки документів
+        </p>
+        <button class="start_button">
+            Почати роботу
+        </button>
+    </section>
+
+    <section class="second_section">
+        <h1 class="section_title">
+            Про систему
+        </h1>
+        <p class="section_text">
+            DocuFlow (з англ. документообіг) - це інноваційна система, яка дозволить клієнтам легко і зручно
+            створювати та опрацьовувати документи. За допомогою нейромереж та Штучного Інтелекту (ШІ) вона розіб'є
+            документ на абзаци і пояснить їх так, щоб клієнт все дуже просто зрозумів. Також наша програма буде
+            зберігати договори для різних сфер бізнесу, які клієнт може завантажити, щоб використати в своїй
+            діяльності. І кожен пункт він зможе редагувати, порадившись з ШІ за допомогою нашого додатку.
+            Платформа може бути посередником між юристом і клієнтом - залучати юристів для допомоги в складних
+            ситуаціях.
+        </p>
+    </section>
+
+    <section class="third_section">
+        <h1 class="section_title">
+            Переваги нашої системи
+        </h1>
+        <div class="advantages">
+            <div class="advantage">
+                <div class="advantage_image">
+                    <img src="/static/images_main/advantage_image_1.png" class="background">
+                </div>
+                <p clas="advantage_text">
+                    Консультації від першокласних юристів
+                </p>
+            </div>
+
+            <div class="advantage">
+                <div class="advantage_image">
+                    <img src="/static/images_main/advantage_image_2.png" class="background">
+                </div>
+                <p clas="advantage_text">
+                    Легке створення та редагування документів
+                </p>
+            </div>
+        </div>
+
+        <div class="advantages">
+            <div class="advantage">
+                <div class="advantage_image">
+                    <img src="/static/images_main/advantage_image_3.png" class="background">
+                </div>
+                <p clas="advantage_text">
+                    Віртуальний асистент, який відповість на будь-які ваші запитання
+                </p>
+            </div>
+            <div class="advantage">
+                <div class="advantage_image">
+                    <img src="/static/images_main/advantage_image_4.png" class="background">
+                </div>
+                <p clas="advantage_text">
+                    Збільшення продуктивності роботи Вашої компанії з використанням електронного докуметообігу
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="fourth_section">
+        <h1 class="fourth_title">
+            Наші партнери
+        </h1>
+        <p class="sponsors">
+            <img src="/static/images_main/sponsor_1.png" class="sponsor">
+            <img src="/static/images_main/sponsor_2.png" class="sponsor">
+            <img src="/static/images_main/sponsor_3.png" class="sponsor">
+            <img src="/static/images_main/sponsor_4.png" class="sponsor">
+        </p>
+    </section>
+
+    <section class="fifth_section">
+        <img src="/static/images_main/fifth_section_background.png" class="background">
+        <h1 class="section_title">
+            Будь-яка платформа. Девайс. Країна.
+        </h1>
+        <p class="section_text">
+            Користуйтесь послугами Docu Flow з будь-яких стаціонарних чи мобільних пристроїв, що мають вихід в Інтернет, незалежно від операційної системи, встановленої на них
+            <br><br>Працюйте з документами з будь-якої точки світу у режимі 24/7
+        </p>
+        <div class="platforms">
+            <div class="platform">
+                <img src="/static/images_main/platform_1.png" class="platform_image">
+                Windows
+            </div>
+            <div class="platform">
+                <img src="/static/images_main/platform_2.png" class="platform_image">
+                IOS
+            </div>
+            <div class="platform">
+                <img src="/static/images_main/platform_3.png" class="platform_image">
+                Linux
+            </div>
+            <div class="platform">
+                <img src="/static/images_main/platform_4.png" class="platform_image">
+                Android
+            </div>
+        </div>
+    </section>
+
+    <section class="sixth_section">
+        <img src="/static/images_main/c_icon.png" class="c_icon">
+        2024 Docu Flow
+    </section>
+</body>
+
+</html>

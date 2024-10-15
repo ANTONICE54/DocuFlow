@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+    margin:0;
+    font-family: 'Montserrat';
+}
+
+html{
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.sign_background{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sign_in_form{
+    width: 700px;
+    background-color: #ffffff;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding:40px 0;
+    border-radius: 50px;
+}
+
+.sign_buttons{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+
+.sign_up_button{
+    border: 2px solid #ffa968;
+    color: #000;
+    background-color: transparent;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.sign_up_button:hover{
+    background-color: #ffcba4;
+}
+
+
+.sign_in_button{
+    border: 2px solid #ffa968;
+    background-color: #ffcba4;
+    color: #000;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.sign_inputs{
+    display: flex;
+    gap: 40px;
+}
+
+
+.sign_input{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+.sign_input_title{
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap:10px;
+}
+
+.sign_input_title img{
+    width: 23px;
+}
+
+.sign_input input{
+    border: 2px solid #ffcba4;
+    width:240px;
+    height:40px;
+    border-radius: 6px;
+    color: #ffa968;
+    padding-left:10px;
+    font-size: 12px;
+}
+
+
+.sign_in_buttons{
+    display: flex;
+    gap: 40px;
+}
+
+.sign_in_button_2, .sign_in_with_google{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width:240px;
+    height:40px;
+    border: 2px solid #ffa968;
+    background-color: #ffcba4;
+    text-decoration: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.sign_in_button_2:hover, .sign_in_with_google:hover{
+    background-color: #ffa968;
+}

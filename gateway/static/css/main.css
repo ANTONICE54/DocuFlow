@@ -1,0 +1,328 @@
+* {
+    box-sizing: border-box;
+    margin:0;
+    font-family: 'Montserrat';
+}
+
+body {
+    width: 100%;
+    background-color: #ffffff;
+    padding-top: 60px;
+}
+
+
+/* NAV */
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #ffffff;
+    z-index: 1000;
+}
+
+.logo {
+    width: 150px;
+    object-fit: contain;
+}
+
+.nav_links{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.nav_link{
+    font-size: 16px;
+    text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+}
+
+.account_content{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.sign_in_button{
+    border: 2px solid #ffa968;
+    background-color: transparent;
+    padding: 8px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #000000;
+    transition: all 0.3s;
+}
+
+.sign_in_button:hover{
+    background-color: #ffcba4;
+}
+
+.account_button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffa968;
+    background-color: transparent;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.account_button img{
+    width: 24px;
+    height: 24px;
+}
+
+.account_button:hover{
+    background-color: #ffcba4;
+}
+
+
+
+/* FIRST SECTION */
+
+
+.first_section{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+    height: 600px;
+}
+
+.first_section .background{
+    position: absolute;
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+.first_section .section_text{
+    z-index: 10;
+    width: 600px;
+    color: #ffffff;
+    font-size: 44px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.first_section .start_button{
+    z-index: 10;
+    border: 2px solid #ffa968;
+    background-color: #ffcba4;
+    padding: 10px 30px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.first_section .start_button:hover{
+    background-color: #ffa968;
+}
+
+
+
+/* SECOND SECTION */
+
+
+.second_section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px 0px;
+}
+
+.second_section .section_title{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.second_section .section_text{
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    max-width: 1000px;
+    width: 80%;
+}
+
+
+
+/* THIRD SECTION */
+
+
+.third_section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px 0px;
+    background-color: #eaeaea;
+}
+
+.third_section .section_title{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.third_section .advantages{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.third_section .advantage{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.third_section .advantage p{
+    width: 200px;
+}
+
+.third_section .advantage_image{
+    width: 80px;
+    height: 80px;
+    background-color: #ffcba4;
+    border: 2px solid #ffa968;
+    border-radius: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.third_section .advantage_image img{
+    width: 50px;
+}
+
+
+
+/* FOURTH SECTION */
+
+
+.fourth_section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 80px;
+    padding: 60px 0px;
+}
+
+.fourth_section .section_title{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.fourth_section .sponsors{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 60px;
+    width: 100%;
+}
+
+.fourth_section .sponsor{
+    height: 50px;
+}
+
+
+
+/* FIFTH SECTION */
+
+
+.fifth_section{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+    height: 750px;
+}
+
+.fifth_section .background{
+    position: absolute;
+    width: 100%;
+    height: 750px;
+    object-fit: cover;
+}
+
+.fifth_section .section_title{
+    z-index: 10;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    max-width: 400px;
+}
+
+.fifth_section .section_text{
+    z-index: 10;
+    width: 500px;
+    color: #ffffff;
+    font-size: 20px;
+    text-align: left;
+    max-width: 1000px;
+    width: 100%;
+}
+
+.platforms{
+    z-index: 10;
+    display: flex;
+    gap: 40px;
+}
+
+.platform{
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 200px;
+    height: 200px;
+    background-color: #ffcba4;
+    border: 2px solid #ffa968;
+    border-radius: 30px;
+    font-size: 18px;
+}
+
+.platform img{
+    width: 100px;
+}
+
+
+
+/* SIXTH SECTION */
+
+
+.sixth_section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 70px;
+    background-color: #000000;
+    color: #ffffff;
+}
