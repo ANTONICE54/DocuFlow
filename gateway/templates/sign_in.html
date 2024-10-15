@@ -18,7 +18,7 @@
 <body>
     <img src="/static/images_sign/sign_background.png" class="sign_background"/>
 
-    <section class="sign_in_form">
+    <form method="post" class="sign_in_form">
         <h1>Вхід або Реєстрація</h1>
         <div class="sign_buttons">
             <a class="sign_up_button" href="/sign_up">Реєстрація</a>
@@ -30,14 +30,14 @@
                     <img src="/static/images_sign/email_icon.png">
                     Пошта
                 </p>
-                <input type="email" placeholder="Пошта"/>
+                <input type="email" placeholder="Пошта" name="email" max="255"/>
             </div>
             <div class="sign_input">
                 <p class="sign_input_title">
                     <img src="/static/images_sign/password_icon.png">
                     Пароль
                 </p>
-                <input type="password" placeholder="Пароль"/>
+                <input type="password" placeholder="Пароль" name="password" max="255"/>
             </div>
         </div>
         <div class="sign_in_buttons">
@@ -47,8 +47,28 @@
                 Google
             </a>
         </div>
-    </section>
+    </form>
 
+    <div class="pop_up_message_background">
+        <div class="pop_up_message">
+            <h1></h1>
+            <div>
+                <a class="cancel" onclick="hideBanner()">Ок</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if ("{{warning_title}}"!=""){
+            document.querySelector('.pop_up_message_background').style.display = 'flex';
+            document.querySelector('.pop_up_message_background h1').innerText = "{{warning_title}}";
+        }
+
+        function hideBanner(){
+            document.querySelector('.pop_up_message_background').style.display = 'none';
+        }
+    </script>
+    
 </body>
 
 </html>
