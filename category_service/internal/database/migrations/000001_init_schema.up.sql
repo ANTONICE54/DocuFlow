@@ -7,7 +7,7 @@ CREATE TABLE "subcategories" (
 
 CREATE TABLE "categories" (
     "id" BIGSERIAL  PRIMARY KEY,
-    "user_id" VARCHAR NOT NULL,
+    "user_id" BIGINT NOT NULL,
     "name" VARCHAR NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT (NOW())
 );

@@ -94,9 +94,19 @@ func (h *CategoryHandler) List(ctx *gin.Context) {
 
 	for _, category := range categoryList {
 		categoryToAppend := models.ElementOfCategoryList{
-			ID:     category.ID,
-			UserID: category.UserID,
-			Name:   category.Name,
+			ID:              category.ID,
+			UserID:          category.UserID,
+			Name:            category.Name,
+			SubcategoryList: []models.ElementOfSubcategoryList{},
+		}
+
+		for _, subcategory := range category.SubcategoryList {
+			subcategoryToAppend := models.ElementOfSubcategoryList{
+				ID:         subcategory.ID,
+				CategoryID: subcategory.CategoryID,
+				Name:       subcategory.Name,
+			}
+			categoryToAppend.SubcategoryList = append(categoryToAppend.SubcategoryList, subcategoryToAppend)
 		}
 		resp.CategoryList = append(resp.CategoryList, categoryToAppend)
 	}

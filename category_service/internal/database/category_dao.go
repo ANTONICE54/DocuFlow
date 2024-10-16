@@ -5,6 +5,7 @@ import (
 	"category_service/internal/models"
 	"context"
 	"database/sql"
+	"time"
 )
 
 type CategoryRepo struct {
@@ -42,7 +43,9 @@ func (repo *CategoryRepo) Create(category models.Category) (*models.Category, er
 
 func (repo *CategoryRepo) ListByUserID(userID uint) ([]models.Category, error) {
 	list := []models.Category{}
-	query := "SELECT id, user_id, name, created_at FROM categories WHERE user_id = $1"
+	categoryMap := make(map[uint]models.Category)
+
+	query := "SELECT categories.id, categories.user_id, categories.name, categories.created_at, subcategories.id, subcategories.name, subcategories.created_at FROM categories LEFT JOIN subcategories ON categories.id = subcategories.category_id  WHERE user_id = $1"
 
 	ctx, cancel := context.WithTimeout(context.Background(), DBTimeout)
 	defer cancel()
@@ -54,17 +57,58 @@ func (repo *CategoryRepo) ListByUserID(userID uint) ([]models.Category, error) {
 	}
 
 	for rows.Next() {
-		var category models.Category
+
+		var subcategory models.Subcategory
+		var categoryID uint
+		var userID uint
+		var createdAt time.Time
+		var categoryName string
+		var subcategoryID sql.NullInt64
+		var subcategoryName sql.NullString
+		var subcategoryCreatedAt sql.NullTime
 
 		err := rows.Scan(
-			&category.ID,
-			&category.UserID,
-			&category.Name,
-			&category.CreatedAt,
+			&categoryID,
+			&userID,
+			&categoryName,
+			&createdAt,
+			&subcategoryID,
+			&subcategoryName,
+			&subcategoryCreatedAt,
 		)
+
 		if err != nil {
 			return nil, apperrors.ErrDatabase(err.Error())
 		}
+
+		category, ok := categoryMap[categoryID]
+
+		if !ok {
+
+			category = models.Category{
+				ID:              categoryID,
+				UserID:          userID,
+				Name:            categoryName,
+				CreatedAt:       createdAt,
+				SubcategoryList: make([]models.Subcategory, 0),
+			}
+
+		}
+
+		if subcategoryID.Valid {
+			subcategory.ID = uint(subcategoryID.Int64)
+			subcategory.Name = subcategoryName.String
+			subcategory.CreatedAt = subcategoryCreatedAt.Time
+			subcategory.CategoryID = categoryID
+
+			category.SubcategoryList = append(category.SubcategoryList, subcategory)
+		}
+
+		categoryMap[categoryID] = category
+
+	}
+
+	for _, category := range categoryMap {
 		list = append(list, category)
 	}
 

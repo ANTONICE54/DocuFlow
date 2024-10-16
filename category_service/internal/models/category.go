@@ -3,10 +3,11 @@ package models
 import "time"
 
 type Category struct {
-	ID        uint
-	UserID    uint
-	Name      string
-	CreatedAt time.Time
+	ID              uint
+	UserID          uint
+	Name            string
+	SubcategoryList []Subcategory
+	CreatedAt       time.Time
 }
 
 type CreateCategoryRequest struct {
@@ -35,9 +36,10 @@ type ListCategoryRequest struct {
 }
 
 type ElementOfCategoryList struct {
-	ID     uint   `json:"id"`
-	UserID uint   `json:"user_id"`
-	Name   string `json:"name"`
+	ID              uint                       `json:"id"`
+	UserID          uint                       `json:"user_id"`
+	Name            string                     `json:"name"`
+	SubcategoryList []ElementOfSubcategoryList `json:"subcategory_list"`
 }
 
 type ListCategoryResponse struct {
