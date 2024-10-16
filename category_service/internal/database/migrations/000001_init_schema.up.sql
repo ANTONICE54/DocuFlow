@@ -14,3 +14,4 @@ CREATE TABLE "categories" (
 
 
 ALTER TABLE "subcategories" ADD FOREIGN KEY ("category_id") REFERENCES "categories" ("id") ON DELETE CASCADE;
+
