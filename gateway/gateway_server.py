@@ -23,6 +23,13 @@ def sign_in():
 
         if sign_in_result != "succes":
             return render_template('sign_in.html', filled_data=[email, password], warning_title=sign_in_result)
+  
+        login_token = log_in_profile(email, password)
+
+        if login_token == "error":
+            return render_template('sign_in.html', filled_data=[email, password], warning_title="Під час входу сталася помилка")
+        
+        session['token'] = login_token
 
         return redirect('/')
     return render_template('sign_in.html', filled_data=[])
@@ -41,10 +48,16 @@ def sign_up():
         sign_up_result = check_sign_up({'name': name,'surname': surname, 'email': email, 'country': country, 'password': password, 'password_confirmation': password_confirmation})
 
         if sign_up_result != "succes":
-            register_profile(name, surname, email, country, password, password_confirmation)
-
             return render_template('sign_up.html', filled_data=[name, surname, email, country, password, password_confirmation], warning_title=sign_up_result)
         
+
+        register_token = register_profile(name, surname, email, country, password)
+
+        if register_token == "error":
+            return render_template('sign_up.html', filled_data=[name, surname, email, country, password, password_confirmation], warning_title="Щось пішло не так з реєстрацією")
+        
+        session['token'] = register_token
+
         return redirect('/')
     return render_template('sign_up.html',  filled_data=[])
 
