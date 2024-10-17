@@ -23,8 +23,5 @@ def check_sign_up(sign_data):
         "password":sign_data["password"]
     }
 
-    #TODO -- check status code
-    requests.post("http://user_service:8080/register", json=data)
-
     return "succes"
     

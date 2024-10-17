@@ -77,11 +77,3 @@ services:
     ports:
       - 5001:5001
     restart: always
-
-  gateway_service:
-    build:
-      context: .
-      dockerfile: ./gateway/Dockerfile
-    ports:
-      - 5000:5000
-    restart: always
