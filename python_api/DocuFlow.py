@@ -175,7 +175,7 @@ async def replace_document_part(document_text: UploadFile, add_request: str) -> 
             messages=[
                 {"role": "system", "content": f'document:{document_text}'},
                 {"role": "system", "content": f'add request:{add_request}'},
-                {"role": "assistant", "content": f'(Country Ukraine).Add part to document using add request to make it better for all sides good in the document context. As a result, you will receive only the text that I need add to document in the language of the country. All data that you do not have, make it in the <[data]> format, make the name of this data clear. Finally, make it look good. Do not make it small.'}
+                {"role": "assistant", "content": f'(Country Ukraine).\nAdd part to document using add request to make it better for all sides good in the document context. As a result, you will receive only the text that I need add to document in the language of the country. All data that you do not have, make it in the <[data]> format, make the name of this data clear. Finally, make it look good. Do not make it small.'}
             ]
         ).choices[0].message.content
     except Exception as add_error:
