@@ -4,7 +4,7 @@ import (
 	"auth_service/internal/apperrors"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 )
 
 type JWTMaker struct {
