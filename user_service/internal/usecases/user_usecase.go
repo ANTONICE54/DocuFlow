@@ -25,17 +25,23 @@ type ITokenMaker interface {
 	ExtractClaims(tokenString string) (*uint, error)
 }
 
+type ICategoryUC interface {
+	CreateDefaultCategories(userID uint)
+}
+
 type UserUC struct {
 	userRepo       IUserRepo
 	tokenMaker     ITokenMaker
 	passwordHasher IPasswordHasher
+	categoryUC     ICategoryUC
 }
 
-func NewUserUC(repo IUserRepo, tokenM ITokenMaker, passwordH IPasswordHasher) *UserUC {
+func NewUserUC(repo IUserRepo, tokenM ITokenMaker, passwordH IPasswordHasher, categoryUC ICategoryUC) *UserUC {
 	return &UserUC{
 		userRepo:       repo,
 		tokenMaker:     tokenM,
 		passwordHasher: passwordH,
+		categoryUC:     categoryUC,
 	}
 }
 
@@ -67,6 +73,8 @@ func (uc *UserUC) Register(user models.RegisterUserRequest) (*string, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	uc.categoryUC.CreateDefaultCategories(createdUser.ID)
 
 	token, err := uc.tokenMaker.GenerateToken(int(createdUser.ID))
 

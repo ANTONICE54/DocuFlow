@@ -8,6 +8,7 @@ import (
 	"auth_service/pkg/hasher"
 	"auth_service/pkg/token"
 	"log"
+	"net/http"
 
 	"github.com/spf13/viper"
 )
@@ -32,7 +33,11 @@ func main() {
 
 	passwordHasher := hasher.NewPasswordHasher()
 
-	userUC := usecases.NewUserUC(userRepo, jwtMaker, passwordHasher)
+	httpClient := http.Client{}
+
+	categoryUC := usecases.NewCategoryUC(&httpClient, "http://category_service:8080")
+
+	userUC := usecases.NewUserUC(userRepo, jwtMaker, passwordHasher, categoryUC)
 	userHandler := handlers.NewUserHandler(userUC)
 
 	app := server.New(userHandler)
