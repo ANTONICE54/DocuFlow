@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docu Flow</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='/css/create_document.css') }}">
+
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='favicon.ico') }}">
+</head>
+
+<body>
+    <nav>
+        <img src="static/images_main/logo.png" class="logo"/>
+
+        <h1>Створення документа по шаблону</h1>
+
+        <a class="account_content" href="/account_settings/">
+            <div class="account_icon">
+                {{avatar_name}}
+            </div>
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-triangle-inverted"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20.118 3h-16.225a2.914 2.914 0 0 0 -2.503 4.371l8.116 13.549a2.917 2.917 0 0 0 4.987 .005l8.11 -13.539a2.914 2.914 0 0 0 -2.486 -4.386z" /></svg>
+        </a>
+    </nav>
+
+    <main>
+        <a class="back_button">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+            На головну
+        </a>
+
+        <form method="post">
+            <div class="get_template_content">
+                <header>
+                    <h4>Вибери шаблон тут</h4>
+                </header>
+                <p>Достуані формати: PDF, TEXT, DOCX</p>
+                <input type="file" hidden accept=".txt,.docx,.pdf" name="template_document" onchange="upload_template(this)">
+                <button type="button" class="choose_template_button" onclick="this.parentElement.querySelector('input').click()">Вибрати шаблон</button>
+            </div>
+    
+            <textarea placeholder="Запрос для створення"></textarea>
+    
+            <button class="create_button">Cтворити документ</button>
+        </form>
+    </main>
+
+    <script>
+        function upload_template(template_document) {
+            template_document.parentElement.querySelector('h4').innerHTML = template_document.files[0].name;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docu Flow</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='/css/documents.css') }}">
+
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='favicon.ico') }}">
+</head>
+
+<body>
+    <nav>
+        <img src="/static/images_main/logo.png" class="logo"/>
+
+        <h1>Документи</h1>
+
+        <a class="account_content" href="/account_settings/">
+            <div class="account_icon">
+                {{avatar_name}}
+            </div>
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-triangle-inverted"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20.118 3h-16.225a2.914 2.914 0 0 0 -2.503 4.371l8.116 13.549a2.917 2.917 0 0 0 4.987 .005l8.11 -13.539a2.914 2.914 0 0 0 -2.486 -4.386z" /></svg>
+        </a>
+    </nav>
+
+    <main>
+        <section class="category_nav">
+            <div class="categories">
+                <div class="category active">
+                    <a class="category_button">
+                        Усі документи
+                    </a>
+                </div>
+                {% for category, subcategories in categories_and_sub_categories %}
+                <div class="category">
+                    <a class="category_button" onclick="openSubCategories(this)">
+                        {{category}}
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-triangle-inverted"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20.118 3h-16.225a2.914 2.914 0 0 0 -2.503 4.371l8.116 13.549a2.917 2.917 0 0 0 4.987 .005l8.11 -13.539a2.914 2.914 0 0 0 -2.486 -4.386z" /></svg>
+                    </a>
+                    <div class="sub_categories">
+                        {% for subcategory in subcategories %}
+                        <a class="sub_category">{{subcategory}}</a>
+                        {% endfor %}
+                        <a href="/add_subcategory" class="add_subcategory_button">
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                            Додати підкатегорію
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="action_buttons">
+                <button class="add_category_button">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                    Додати категорію
+                </button>
+                <a href="/account" class="back_button">
+                    <div class="back_icon">
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-narrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l4 4" /><path d="M5 12l4 -4" /></svg>
+                    </div>
+                    На головну
+                </a>
+            </div>
+        </section>
+        <section class="documents_list">
+            <div class="document" onclick="openDocumentActions(event)">
+                <div class="file_main_content">
+                    <div class="actions_button_content">
+                        <button class="actions_button">
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                        </button>
+                    </div>
+                    <div class="file_main_text_content">
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-text"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 9l1 0" /><path d="M9 13l6 0" /><path d="M9 17l6 0" /></svg>
+                        <p>NameNameNameNameNameNameNameNameName</p>
+                    </div>
+                </div>
+                <div class="file_other_content">
+                    <p>Status</p>
+                    <p>Date</p>
+                </div>
+
+                <div class="document_actions">
+                    <a>Налаштувати</a>
+                    <a>Редагувати</a>
+                    <a>Завантажити</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="create_pop_up_background">
+        <div class="create_pop_up">
+            <div class="info">
+                <h1>Створити категорію</h1>
+                <a class="cancel_button">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+                </a>
+            </div>
+            <div class="actions">
+                <input placeholder="Ім'я категорії" maxlength="255" onchange="change_create_button(this)">
+                <button class="submit_button" onclick="create_category(this.parentElement.querySelector('input'))" disabled>Створити</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openSubCategories(category) {
+            category.parentElement.classList.toggle('active');
+            document.querySelectorAll('.category').forEach(element => {
+                if (element != category.parentElement){
+                    element.classList.remove('active');
+                }
+            });
+        }
+
+        function openDocumentActions(open_event) {
+            document.querySelector('.document_actions').classList.add('active');
+            open_event.stopPropagation();
+            document.body.addEventListener("click", function (click_event) {
+                console.log(click_event.target)
+                if (click_event.target != document.querySelector('.document_actions')){
+                    document.querySelector('.document_actions').classList.remove('active');
+                    document.body.removeEventListener('click', arguments.callee, false);
+                }
+            });
+        }
+
+        function change_create_button(input){
+            if (input.value!='') {
+                input.parentElement.querySelector('.submit_button').disabled=false;
+            }
+            else {
+                input.parentElement.querySelector('.submit_button').disabled=true
+            }
+        }
+
+        function create_category(category_name){
+            window.location.href = `/create_category/${category_name.value}`;
+        }
+    </script>
+
+</body>
+
+</html>

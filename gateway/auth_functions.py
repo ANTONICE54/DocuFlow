@@ -1,41 +1,23 @@
-import requests
+from main_functions import *
 
 def register_profile(name, surname, email, country, password):
-    for register_attempt in range(3):
-        try:
-            register_response = requests.post("http://localhost:8080/register", json= {"name":name, "surname":surname, "email":email, "country":country, "password":password})
-            register_status = register_response.status_code
-            if register_status == 200:
-                token = register_response.json()['token']
-                return token
-        except:
-            pass
+    token = make_post_request("http://localhost:8080/register", json = {"name":name, "surname":surname, "email":email, "country":country, "password":password})
+    if type(token)!=str: token = token.get("token", 'error') 
 
-    return 'error'
+    return token
 
 def log_in_profile(email, password):
-    for login_attempt in range(3):
-        try:
-            login_response = requests.post("http://localhost:8080/login", json= {"email":email, "password":password})
-            login_status = login_response.status_code
-            if login_status == 200:
-                token = login_response.json()['token']
-                return token
-        except:
-            pass
+    token = make_post_request("http://localhost:8080/login", json = {"email":email, "password":password})
+    if type(token)!=str: token = token.get("token", 'error') 
 
-    return 'error'
+    return token
 
 def verify_profile_token(token):
-    for verify_attempt in range(3):
-        try:
-            verify_response = requests.post("http://localhost:8080/login", json= {"token":token})
-            verify_status = verify_response.status_code
-            if verify_status == 200:
-                token = verify_response.json()
-                print(token)
-                return token
-        except:
-            pass
+    user_id = make_post_request("http://localhost:8080/verify", json = {"token":token})
+    if type(user_id)!=str: user_id = user_id.get("user_id", 'error') 
 
+<<<<<<< HEAD
     return 'error'
+=======
+    return user_id
+>>>>>>> baab450 (	modified:   gateway/auth_functions.py)
