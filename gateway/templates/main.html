@@ -26,10 +26,13 @@
         </div>
 
         <div class="account_content">
+            {% if user_id==None %}
             <a class="sign_in_button" href="/sign_in">Увійти</a>
+            {% else %}
             <a class="account_button" href="/account">
                 <img src="/static/images_main/account_icon.png"/>
             </a>
+            {% endif %}
         </div>
     </nav>
 
