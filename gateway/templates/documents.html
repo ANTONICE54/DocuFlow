@@ -17,7 +17,7 @@
 
 <body>
     <nav>
-        <img src="/static/images_main/logo.png" class="logo"/>
+        <a href="/account"><img src="/static/images_main/logo.png" class="logo"/></a>
 
         <h1>Документи</h1>
 
@@ -33,11 +33,11 @@
         <section class="category_nav">
             <div class="categories">
                 <div class="category active">
-                    <a class="category_button">
+                    <a class="category_button all_documents" onclick="openSubCategories(this)">
                         Усі документи
                     </a>
                 </div>
-                {% for category, subcategories in categories_and_sub_categories %}
+                {% for category_id, category, subcategories in categories_and_sub_categories %}
                 <div class="category">
                     <a class="category_button" onclick="openSubCategories(this)">
                         {{category}}
@@ -47,7 +47,7 @@
                         {% for subcategory in subcategories %}
                         <a class="sub_category">{{subcategory}}</a>
                         {% endfor %}
-                        <a href="/add_subcategory" class="add_subcategory_button">
+                        <a class="add_subcategory_button" onclick="openBannerSubcategoryCreate('{{category_id}}')">
                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                             Додати підкатегорію
                         </a>
@@ -56,7 +56,7 @@
                 {% endfor %}
             </div>
             <div class="action_buttons">
-                <button class="add_category_button">
+                <button class="add_category_button" onclick="openBannerCategoryCreate()">
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                     Додати категорію
                 </button>
@@ -99,18 +99,33 @@
         <div class="create_pop_up">
             <div class="info">
                 <h1>Створити категорію</h1>
-                <a class="cancel_button">
+                <a class="cancel_button" onclick="hideBanner(this.parentElement.parentElement.parentElement)">
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
                 </a>
             </div>
             <div class="actions">
                 <input placeholder="Ім'я категорії" maxlength="255" onchange="change_create_button(this)">
-                <button class="submit_button" onclick="create_category(this.parentElement.querySelector('input'))" disabled>Створити</button>
+                <button class="submit_button" onclick="create_category_or_subcategory(`/create_category/${this.parentElement.querySelector('input').value}`)" disabled>Створити</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="pop_up_message_background">
+        <div class="pop_up_message">
+            <h1></h1>
+            <div>
+                <a class="cancel" onclick="hideBanner(this.parentElement.parentElement.parentElement)">Ок</a>
             </div>
         </div>
     </div>
 
     <script>
+        if ("{{warning_title}}"!=""){
+            document.querySelector('.pop_up_message_background').style.display = 'flex';
+            document.querySelector('.pop_up_message_background h1').innerText = "{{warning_title}}";
+        }
+
+
         function openSubCategories(category) {
             category.parentElement.classList.toggle('active');
             document.querySelectorAll('.category').forEach(element => {
@@ -118,6 +133,9 @@
                     element.classList.remove('active');
                 }
             });
+            if (!category.parentElement.classList.contains('active')){
+                document.querySelector('.all_documents').parentElement.classList.add('active');
+            }
         }
 
         function openDocumentActions(open_event) {
@@ -132,6 +150,23 @@
             });
         }
 
+        function openBannerCategoryCreate(){
+            document.querySelector('.create_pop_up_background').style.display = 'flex';
+        }
+
+        function openBannerSubcategoryCreate(category_id){
+            document.querySelector('.create_pop_up_background').style.display = 'flex';
+            document.querySelector('.create_pop_up_background h1').innerText = "Створити підкатегорію";
+            document.querySelector('.create_pop_up_background input').placeholder = "Ім'я підкатегорії";
+            document.querySelector('.create_pop_up_background .actions button').onclick = function(){
+                create_category_or_subcategory(`/create_subcategory/${category_id}/${this.parentElement.querySelector('input').value}`);
+            }
+        }
+
+        function hideBanner(banner){
+            banner.style.display = 'none';
+        }
+
         function change_create_button(input){
             if (input.value!='') {
                 input.parentElement.querySelector('.submit_button').disabled=false;
@@ -141,8 +176,9 @@
             }
         }
 
-        function create_category(category_name){
-            window.location.href = `/create_category/${category_name.value}`;
+        function create_category_or_subcategory(create_request){
+            console.log(create_request)
+            window.location.href = create_request;
         }
     </script>
 

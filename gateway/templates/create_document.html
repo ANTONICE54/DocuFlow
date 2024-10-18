@@ -17,7 +17,7 @@
 
 <body>
     <nav>
-        <img src="static/images_main/logo.png" class="logo"/>
+        <a href="/account"><img src="static/images_main/logo.png" class="logo"/></a>
 
         <h1>Створення документа по шаблону</h1>
 
@@ -30,12 +30,12 @@
     </nav>
 
     <main>
-        <a class="back_button">
+        <a class="back_button" href="/account">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
             На головну
         </a>
 
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="get_template_content">
                 <header>
                     <h4>Вибери шаблон тут</h4>
@@ -45,13 +45,32 @@
                 <button type="button" class="choose_template_button" onclick="this.parentElement.querySelector('input').click()">Вибрати шаблон</button>
             </div>
     
-            <textarea placeholder="Запрос для створення"></textarea>
+            <textarea name="create_request" placeholder="Запрос для створення"></textarea>
     
             <button class="create_button">Cтворити документ</button>
         </form>
     </main>
 
+    <div class="pop_up_message_background">
+        <div class="pop_up_message">
+            <h1></h1>
+            <div>
+                <a class="cancel" onclick="hideBanner(this.parentElement.parentElement.parentElement)">Ок</a>
+            </div>
+        </div>
+    </div>
+
     <script>
+        if ("{{warning_title}}"!=""){
+            document.querySelector('.pop_up_message_background').style.display = 'flex';
+            document.querySelector('.pop_up_message_background h1').innerText = "{{warning_title}}";
+        }
+
+        function hideBanner(banner){
+            banner.style.display = 'none';
+        }
+
+
         function upload_template(template_document) {
             template_document.parentElement.querySelector('h4').innerHTML = template_document.files[0].name;
         }

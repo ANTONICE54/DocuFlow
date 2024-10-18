@@ -15,13 +15,6 @@ def check_sign_up(sign_data):
         
     if sign_data["password"] != sign_data["password_confirmation"]:
         return f"{data_name} пітвердження паролю не співпадає"
-    data = {
-        "name": sign_data["name"],
-        "surname": sign_data["surname"],
-        "email": sign_data["email"],
-        "country": sign_data["country"],
-        "password":sign_data["password"]
-    }
 
     return "succes"
     
